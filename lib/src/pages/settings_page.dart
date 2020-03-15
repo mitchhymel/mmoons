@@ -1,12 +1,12 @@
 part of mmoons;
 
-class MainContainer extends StatelessWidget {
+class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthStore auth = Provider.of<AuthStore>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('mmoons')
+        title: Text('Settings'),
       ),
       body: Column(
         children: <Widget>[
