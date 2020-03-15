@@ -1,0 +1,6 @@
+package com.mythichelm.mmoons
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}
