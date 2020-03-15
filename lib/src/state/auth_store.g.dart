@@ -51,6 +51,13 @@ mixin _$AuthStore on _AuthStore, Store {
     return _$loginAsyncAction.run(() => super.login());
   }
 
+  final _$logoutAsyncAction = AsyncAction('logout');
+
+  @override
+  Future<void> logout() {
+    return _$logoutAsyncAction.run(() => super.logout());
+  }
+
   @override
   String toString() {
     final string =

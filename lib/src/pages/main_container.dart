@@ -4,19 +4,18 @@ class MainContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthStore auth = Provider.of<AuthStore>(context);
-
     return Scaffold(
       appBar: AppBar(
-        title: Text('ay'),
+        title: Text('mmoons')
       ),
       body: Column(
         children: <Widget>[
           RaisedButton(
-            onPressed: () => auth.login(),
-            child: Text('Login with Google'),
+              onPressed: () => auth.logout(),
+              child: Text('Logout')
           ),
           Observer(
-            builder: (_) => Text('${auth.isLoggedIn ? auth.userName : 'ayy'}'),
+            builder: (_) => Text('Hi ${auth.userName}'),
           )
         ],
       ),

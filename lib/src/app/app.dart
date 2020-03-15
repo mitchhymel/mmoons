@@ -9,8 +9,9 @@ class App extends StatelessWidget {
     ],
     child: MaterialApp(
       title: 'Gamendar',
-      //theme: AppModel.of(context).theme.getThemeData(),
-      home: MainContainer(),
+      home: AppContainer(),
+      themeMode: ThemeMode.dark,
+      darkTheme: ThemeData.dark(),
     ),
   );
 }

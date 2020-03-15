@@ -10,6 +10,10 @@ class AuthStore = _AuthStore with _$AuthStore;
 const _SCOPES = [ 'email' ];
 
 abstract class _AuthStore with Store {
+  GoogleSignIn _googleSignIn = new GoogleSignIn(
+    scopes: _SCOPES
+  );
+
   @observable
   FirebaseUser firebaseUser;
 
@@ -25,10 +29,7 @@ abstract class _AuthStore with Store {
 
   @action
   Future<void> tryLoginSilently() async {
-    final GoogleSignIn googleSignIn = new GoogleSignIn(
-        scopes: _SCOPES
-    );
-    final GoogleSignInAccount gsa = await googleSignIn.signInSilently();
+    final GoogleSignInAccount gsa = await _googleSignIn.signInSilently();
     if (gsa == null) {
       debugPrint('Failed to sign into Google silently.');
     }
@@ -39,22 +40,27 @@ abstract class _AuthStore with Store {
 
   @action
   Future<void> login() async {
-    final GoogleSignIn googleSignIn = new GoogleSignIn(
-      scopes: _SCOPES
-    );
-    final GoogleSignInAccount gsa = await googleSignIn.signIn();
+    final GoogleSignInAccount gsa = await _googleSignIn.signIn();
     firebaseUser = await _getFirebaseUserFromGoogleSignInAccount(gsa);
+  }
+
+  @action
+  Future<void> logout() async {
+    await _googleSignIn.signOut();
+    await FirebaseAuth.instance.signOut();
+    firebaseUser = null;
   }
 
   Future<FirebaseUser> _getFirebaseUserFromGoogleSignInAccount(
       GoogleSignInAccount gsa) async {
-    final FirebaseAuth auth = FirebaseAuth.instance;
     final GoogleSignInAuthentication gAuth = await gsa.authentication;
     final AuthCredential cred = GoogleAuthProvider.getCredential(
         accessToken: gAuth.accessToken,
         idToken: gAuth.idToken
     );
+    final FirebaseAuth auth = FirebaseAuth.instance;
     final AuthResult authResult = await auth.signInWithCredential(cred);
     return authResult.user;
   }
+
 }
