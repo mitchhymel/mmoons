@@ -11,7 +11,12 @@ class App extends StatelessWidget {
       title: 'Gamendar',
       home: AppContainer(),
       themeMode: ThemeMode.dark,
-      darkTheme: ThemeData.dark(),
+      darkTheme: ThemeData.dark().copyWith(
+        accentColor: Colors.redAccent,
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: Colors.redAccent
+        )
+      ),
     ),
   );
 }

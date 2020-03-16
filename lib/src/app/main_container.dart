@@ -12,12 +12,18 @@ class _MainContainerState extends State<MainContainer> {
   static List<Widget> _tabs = <Widget>[
     CurrentWeekPage(),
     ProgressPage(),
-    CustomizeWorkoutPage()
+    SearchPage()
   ];
 
   void _onSettingsClicked(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute<Null>(
         builder: (BuildContext context) => SettingsPage()
+    ));
+  }
+
+  void _onCreateProgramClicked(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute<Null>(
+      builder: (BuildContext context) => CreateProgramPage()
     ));
   }
 
@@ -48,7 +54,6 @@ class _MainContainerState extends State<MainContainer> {
     var bottomNavBar = BottomNavigationBar(
       onTap: _onItemTapped,
       currentIndex: _selectedIndex,
-      selectedItemColor: Colors.redAccent,
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.calendar_today),
@@ -59,16 +64,26 @@ class _MainContainerState extends State<MainContainer> {
           title: Text('Progress'),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.edit),
-          title: Text('Customize'),
+          icon: Icon(Icons.search),
+          title: Text('Search'),
         )
       ]
+    );
+
+    var fab =  _selectedIndex != 2 ? null : FloatingActionButton(
+      child: Icon(Icons.add),
+      onPressed: () {
+        if (_selectedIndex == 2) {
+          _onCreateProgramClicked(context);
+        }
+      },
     );
 
     return Scaffold(
       appBar: appBar,
       body: _tabs.elementAt(_selectedIndex),
       bottomNavigationBar: bottomNavBar,
+      floatingActionButton: fab,
     );
   }
 }
